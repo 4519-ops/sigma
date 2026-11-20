@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#160d2e">
+<title>เกมคิดเลข | Magic Math Kingdom</title>
+<style>
+:root{--bg:#100a22;--panel:#21143d;--panel2:#2b1b4c;--purple:#9b6cff;--pink:#ff79c6;--gold:#ffd76a;--mint:#83f2c4;--text:#fff8ff;--muted:#c7b8df;--danger:#ff718d}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% 0%,#3a2362 0,#1b1033 45%,#090615 100%);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:hidden}
+button,input{font:inherit}button{cursor:pointer;border:0}.stars{position:fixed;inset:0;pointer-events:none;opacity:.65;background-image:radial-gradient(2px 2px at 10% 20%,#fff 50%,transparent 60%),radial-gradient(1px 1px at 70% 15%,#fff 50%,transparent 60%),radial-gradient(2px 2px at 40% 60%,#d9c6ff 50%,transparent 60%),radial-gradient(1px 1px at 85% 75%,#fff 50%,transparent 60%),radial-gradient(1px 1px at 22% 83%,#fff 50%,transparent 60%);background-size:320px 260px}
+.wrap{width:min(1100px,94vw);margin:auto;padding:22px 0 42px;position:relative}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}.brand{font-weight:900;letter-spacing:.5px;color:#eadcff}.brand span{color:var(--gold)}.smallbtn,.btn{border-radius:14px;padding:10px 16px;color:white;background:#49306e;border:1px solid #7654a5;font-weight:700}.btn.primary{background:linear-gradient(135deg,#a56cff,#7043c5);box-shadow:0 7px 22px #8d5be955}.btn.gold{background:linear-gradient(135deg,#ffe58a,#e6a83f);color:#442b13}.btn:disabled{opacity:.4;cursor:not-allowed}.screen{display:none}.screen.active{display:block}.hero,.panel{background:linear-gradient(145deg,#291b49ee,#160f2deF);border:1px solid #684a8b;border-radius:26px;box-shadow:0 18px 50px #05020c88;padding:clamp(20px,4vw,38px)}.hero{text-align:center;overflow:hidden;position:relative}.moon{font-size:54px;filter:drop-shadow(0 0 20px #e8d4ff)}h1{font-size:clamp(32px,6vw,58px);margin:8px 0;color:#f3e7ff;text-shadow:0 4px 20px #9e68ff66}.subtitle{color:var(--muted);margin:0 auto 22px;max-width:650px;line-height:1.7}.forest{height:115px;position:relative;margin:10px -10px 20px;overflow:hidden;border-radius:18px;background:linear-gradient(#20133c,#111024)}.tree{position:absolute;bottom:-8px;font-size:76px;filter:drop-shadow(0 0 12px #120a24)}.tree:nth-child(1){left:3%}.tree:nth-child(2){left:19%;font-size:58px}.tree:nth-child(3){right:17%;font-size:66px}.tree:nth-child(4){right:2%}.castle{font-size:70px;position:absolute;left:50%;transform:translateX(-50%);bottom:4px;filter:drop-shadow(0 0 15px #b78aff)}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;text-align:left;margin:18px 0}.field{background:#180f2e;border:1px solid #513873;border-radius:16px;padding:14px}.field label{display:block;color:var(--muted);font-size:13px;margin-bottom:7px}.field input,.field select{width:100%;background:#2b1b49;color:white;border:1px solid #684b8d;border-radius:10px;padding:10px}.row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.note{font-size:13px;color:#cdbde5;line-height:1.7}.how{max-width:720px;margin:20px auto 0;text-align:left;background:#170f2caa;padding:14px 18px;border-radius:15px;color:#d9cbea}.how b{color:var(--gold)}
+.gamehead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}.scores{display:grid;grid-template-columns:1fr 1fr;gap:12px}.scorebox{background:#21143d;border:1px solid #62458a;border-radius:16px;padding:12px 16px}.scorebox.activeplayer{outline:2px solid var(--gold);box-shadow:0 0 22px #ffd76a44}.scoreline{display:flex;justify-content:space-between;align-items:center;gap:8px}.score{font-size:27px;font-weight:900;color:var(--gold)}.progress{height:9px;background:#100a20;border-radius:20px;overflow:hidden;margin-top:8px}.progress i{display:block;height:100%;background:linear-gradient(90deg,#9b6cff,#ffd76a);width:0%;transition:width .3s}.arena{margin-top:14px;text-align:center}.meta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:14px}.timerbar{height:12px;background:#100a20;border-radius:20px;overflow:hidden;margin:12px 0 22px}.timerbar i{height:100%;display:block;width:100%;background:linear-gradient(90deg,#82f2c4,#ffd76a);transition:width .2s linear}.question{font-size:clamp(30px,7vw,58px);font-weight:900;margin:18px 0;color:#fff}.answers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:620px;margin:0 auto}.answer{padding:18px 12px;border-radius:16px;background:#352052;border:2px solid #7957a0;color:white;font-size:25px;font-weight:900;transition:.15s}.answer:hover{transform:translateY(-2px);background:#523176}.answer.correct{background:#176447;border-color:#83f2c4}.answer.wrong{background:#70283e;border-color:#ff718d}.feedback{min-height:32px;margin:14px 0;color:var(--gold);font-weight:800}.gameactions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.hint{font-size:14px;color:#d9cbea;margin-top:10px}.dashgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.stat{background:#180f2e;border:1px solid #513873;border-radius:15px;padding:14px;text-align:center}.stat strong{display:block;font-size:25px;color:var(--gold)}.stat span{font-size:13px;color:var(--muted)}.resulttitle{font-size:clamp(28px,5vw,42px);text-align:center;margin:8px}.starsbig{font-size:40px;text-align:center;letter-spacing:6px;color:var(--gold)}.resultlist{line-height:1.9;color:#e7dcf5}.footer{text-align:center;color:#8f7eaa;font-size:12px;margin-top:18px}
+@media(max-width:620px){.grid{grid-template-columns:1fr}.scores{grid-template-columns:1fr 1fr}.scorebox{padding:10px}.score{font-size:23px}.dashgrid{grid-template-columns:1fr 1fr}.answer{font-size:22px;padding:16px 8px}.hero,.panel{border-radius:20px}.top{align-items:flex-start}.smallbtn{padding:8px 10px}}
+</style>
+</head>
+<body>
+<div class="stars"></div>
+<main class="wrap">
+  <header class="top"><div class="brand">✨ MAGIC <span>MATH</span> KINGDOM</div><button class="smallbtn" id="soundToggle" type="button">🔊 เสียง: เปิด</button></header>
+
+  <section class="screen active" id="home">
+    <div class="hero">
+      <div class="moon">🌙</div>
+      <h1>เกมคิดเลข</h1>
+      <p class="subtitle">ผจญภัยในอาณาจักรเวทมนตร์ยามค่ำคืน แข่งขันตอบโจทย์คณิตศาสตร์กับเพื่อน สะสมคะแนนให้ถึง 100 ก่อนใคร!</p>
+      <div class="forest"><span class="tree">🌲</span><span class="tree">🌳</span><span class="castle">🏰</span><span class="tree">🌳</span><span class="tree">🌲</span></div>
+      <div class="grid">
+        <div class="field"><label for="p1">ชื่อผู้เล่น 1</label><input id="p1" maxlength="14" value="ผู้เล่น 1"></div>
+        <div class="field"><label for="p2">ชื่อผู้เล่น 2</label><input id="p2" maxlength="14" value="ผู้เล่น 2"></div>
+        <div class="field"><label for="level">ระดับความยาก</label><select id="level"><option value="1">ด่าน 1 · นักเวทฝึกหัด (บวกเลขง่าย)</option><option value="2">ด่าน 2 · ผู้พิทักษ์ (บวกและลบ)</option><option value="3">ด่าน 3 · จอมเวท (บวก ลบ คูณ)</option></select></div>
+        <div class="field"><label for="timeLimit">เวลาต่อข้อ</label><select id="timeLimit"><option value="10">10 วินาที · ท้าทาย</option><option value="15" selected>15 วินาที · ปกติ</option><option value="20">20 วินาที · ผ่อนคลาย</option><option value="30">30 วินาที · ฝึกฝน</option></select></div>
+      </div>
+      <div class="row"><button class="btn primary" id="startBtn">⚔️ เริ่มการต่อสู้</button><button class="btn" id="dashboardBtn">📊 ดูสถิติการเรียนรู้</button></div>
+      <div class="how"><b>📜 วิธีเล่น</b><br>• ผู้เล่นผลัดกันตอบคำถามคนละ 1 ข้อ • ตอบถูกได้ 10 คะแนน ตอบผิดหรือหมดเวลาไม่ได้คะแนน • ใช้คำใบ้ได้ แต่เสีย 5 คะแนน • ใครสะสมครบ 100 คะแนนก่อนเป็นผู้ชนะ<br>• ดาว 1–3 ดวงคำนวณจากความแม่นยำในการตอบ</div>
+    </div>
+  </section>
+
+  <section class="screen" id="game">
+    <div class="gamehead"><div><b>🏰 สนามประลองเวทมนตร์</b><div class="note" id="roundInfo">ด่าน 1</div></div><button class="smallbtn" id="quitBtn">↩ กลับหน้าหลัก</button></div>
+    <div class="scores">
+      <div class="scorebox" id="box1"><div class="scoreline"><b id="name1">ผู้เล่น 1</b><span>🟣</span></div><div class="score" id="score1">0 / 100</div><div class="progress"><i id="bar1"></i></div></div>
+      <div class="scorebox" id="box2"><div class="scoreline"><b id="name2">ผู้เล่น 2</b><span>🔮</span></div><div class="score" id="score2">0 / 100</div><div class="progress"><i id="bar2"></i></div></div>
+    </div>
+    <div class="panel arena">
+      <div class="meta"><span id="turnLabel">ตาของผู้เล่น 1</span><span id="levelLabel">ด่าน 1</span><span>🎯 เป้าหมาย 100 คะแนน</span></div>
+      <div class="timerbar"><i id="timerFill"></i></div>
+      <div class="note">จงหาคำตอบให้ถูกต้องก่อนหมดเวลา</div>
+      <div class="question" id="question">2 + 3 = ?</div>
+      <div class="answers" id="answers"></div>
+      <div class="feedback" id="feedback" aria-live="polite"></div>
+      <div class="gameactions"><button class="btn gold" id="hintBtn">💡 ขอคำใบ้ (-5 คะแนน)</button><button class="btn" id="nextBtn" hidden>ข้อถัดไป ➜</button></div>
+      <div class="hint" id="hintText"></div>
+    </div>
+  </section>
+
+  <section class="screen" id="result">
+    <div class="panel">
+      <div class="moon" style="text-align:center">🏆</div><h2 class="resulttitle" id="winnerTitle">ผู้ชนะ!</h2>
+      <div class="starsbig" id="starsResult">★★★</div>
+      <p class="subtitle" id="resultSubtitle"></p>
+      <div class="dashgrid">
+        <div class="stat"><strong id="rCorrect">0</strong><span>ตอบถูก</span></div>
+        <div class="stat"><strong id="rAccuracy">0%</strong><span>ความแม่นยำ</span></div>
+        <div class="stat"><strong id="rScore">0</strong><span>คะแนนผู้ชนะ</span></div>
+      </div>
+      <div class="resultlist" id="learningAdvice"></div>
+      <div class="row" style="margin-top:22px"><button class="btn primary" id="againBtn">🔁 เล่นอีกครั้ง</button><button class="btn" id="resultDashBtn">📊 ดู Dashboard</button><button class="btn" id="homeBtn">หน้าหลัก</button></div>
+    </div>
+  </section>
+
+  <section class="screen" id="dashboard">
+    <div class="panel">
+      <h2 style="text-align:center">📊 Dashboard การเรียนรู้</h2><p class="subtitle">สถิติการฝึกคิดเลขที่บันทึกไว้ในอุปกรณ์นี้</p>
+      <div class="dashgrid">
+        <div class="stat"><strong id="dGames">0</strong><span>จำนวนเกม</span></div>
+        <div class="stat"><strong id="dAccuracy">0%</strong><span>ความแม่นยำเฉลี่ย</span></div>
+        <div class="stat"><strong id="dBest">0</strong><span>คะแนนสูงสุด</span></div>
+      </div>
+      <h3>📚 คำแนะนำในการพัฒนา</h3><div class="resultlist" id="dAdvice">เล่นเกมเพื่อเก็บข้อมูลการเรียนรู้</div>
+      <h3>🪙 เหรียญรางวัล</h3><div class="resultlist" id="dBadges">ยังไม่มีเหรียญรางวัล</div>
+      <div class="row" style="margin-top:22px"><button class="btn primary" id="dashPlayBtn">เริ่มเล่น</button><button class="btn" id="clearDataBtn">ล้างสถิติในเครื่องนี้</button><button class="btn" id="dashHomeBtn">กลับหน้าหลัก</button></div>
+      <p class="note">หมายเหตุ: คะแนนและสถิติบันทึกด้วย LocalStorage ในเบราว์เซอร์เครื่องนี้ หากล้างข้อมูลเว็บไซต์หรือเปลี่ยนอุปกรณ์ ข้อมูลอาจหายไป</p>
+    </div>
+  </section>
+  <div class="footer">MAGIC MATH KINGDOM · เรียนรู้ผ่านการเล่น คิดเป็น วางแผนเป็น และสนุกไปด้วยกัน</div>
+</main>
+<script>
+"use strict";
+// ============================================================
+// 1) ตั้งค่าเกมและคลังโจทย์: ครูสามารถปรับช่วงตัวเลขได้ในฟังก์ชัน makeQuestion()
+// ============================================================
+const $ = id => document.getElementById(id);
+const state = {
+  players: [], scores:[0,0], current:0, level:1, timeLimit:15, timeLeft:15,
+  timer:null, locked:false, question:null, hintUsed:false, sound:true,
+  stats:[{correct:0,wrong:0,timeout:0,hints:0,total:0},{correct:0,wrong:0,timeout:0,hints:0,total:0}],
+  sessionSaved:false
+};
+const STORAGE_KEY = "magicMathKingdomStats_v1";
+function readData(){
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {games:0,totalCorrect:0,totalAttempts:0,bestScore:0,badges:[]}; }
+  catch(e){ return {games:0,totalCorrect:0,totalAttempts:0,bestScore:0,badges:[]}; }
+}
+function saveData(data){ try{localStorage.setItem(STORAGE_KEY,JSON.stringify(data));}catch(e){} }
+function showScreen(id){ document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active")); $(id).classList.add("active"); }
+function rand(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+function makeQuestion(level){
+  let a,b,op,answer;
+  if(level===1){ a=rand(1,10); b=rand(1,10); op="+"; answer=a+b; }
+  else if(level===2){ op=Math.random()<.5?"+":"−"; a=rand(2,20); b=rand(1,20); if(op==="−"&&b>a)[a,b]=[b,a]; answer=op==="+"?a+b:a-b; }
+  else { const choice=rand(1,3); if(choice===1){a=rand(5,30);b=rand(1,20);op="+";answer=a+b;} else if(choice===2){a=rand(5,30);b=rand(1,a);op="−";answer=a-b;} else {a=rand(2,10);b=rand(2,10);op="×";answer=a*b;} }
+  const choices=new Set([answer]);
+  while(choices.size<4){let wrong=answer+rand(-8,8);if(wrong>=0&&wrong!==answer)choices.add(wrong);}
+  return {text:`${a} ${op} ${b} = ?`,answer,choices:[...choices].sort(()=>Math.random()-.5),a,b,op};
+}
+// ============================================================
+// 2) เสียงประกอบด้วย Web Audio API ไม่ต้องโหลดไฟล์เสียงจากอินเทอร์เน็ต
+// ============================================================
+let audioCtx=null;
+function tone(freq,duration,type="sine",volume=.06){
+  if(!state.sound)return;
+  try{audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();osc.type=type;osc.frequency.value=freq;gain.gain.setValueAtTime(volume,audioCtx.currentTime);gain.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+duration);osc.connect(gain);gain.connect(audioCtx.destination);osc.start();osc.stop(audioCtx.currentTime+duration);}catch(e){}
+}
+function soundCorrect(){tone(660,.12);setTimeout(()=>tone(880,.18),100);}
+function soundWrong(){tone(190,.25,"triangle");}
+function stopTimer(){if(state.timer){clearInterval(state.timer);state.timer=null;}}
+function updateScores(){
+  [0,1].forEach(i=>{$("score"+(i+1)).textContent=state.scores[i]+" / 100";$("bar"+(i+1)).style.width=Math.min(100,state.scores[i])+"%";$("box"+(i+1)).classList.toggle("activeplayer",state.current===i);});
+  $("turnLabel").textContent="ตาของ "+state.players[state.current];
+}
+// ============================================================
+// 3) เริ่มเกม สลับผู้เล่นทีละข้อ และตรวจเงื่อนไขชนะ
+// ============================================================
+function startGame(){
+  stopTimer();
+  state.players=[$("p1").value.trim()||"ผู้เล่น 1",$("p2").value.trim()||"ผู้เล่น 2"];
+  state.scores=[0,0];state.current=0;state.level=Number($("level").value);state.timeLimit=Number($("timeLimit").value);
+  state.stats=[{correct:0,wrong:0,timeout:0,hints:0,total:0},{correct:0,wrong:0,timeout:0,hints:0,total:0}];state.sessionSaved=false;
+  $("name1").textContent=state.players[0];$("name2").textContent=state.players[1];
+  $("levelLabel").textContent="ด่าน "+state.level;$("roundInfo").textContent="ด่าน "+state.level+" · แข่งขันสะสม 100 คะแนน";
+  showScreen("game");newTurn();
+}
+function newTurn(){
+  stopTimer();state.locked=false;state.hintUsed=false;state.timeLeft=state.timeLimit;state.question=makeQuestion(state.level);
+  $("question").textContent=state.question.text;$("feedback").textContent="";$("hintText").textContent="";
+  $("hintBtn").disabled=false;$("nextBtn").hidden=true;
+  const area=$("answers");area.innerHTML="";
+  state.question.choices.forEach(value=>{const btn=document.createElement("button");btn.className="answer";btn.textContent=value;btn.type="button";btn.addEventListener("click",()=>answer(value,btn));area.appendChild(btn);});
+  updateScores();updateTimerBar();state.timer=setInterval(()=>{state.timeLeft-=.1;if(state.timeLeft<=0){state.timeLeft=0;updateTimerBar();timeoutTurn();}else updateTimerBar();},100);
+}
+function updateTimerBar(){const pct=Math.max(0,state.timeLeft/state.timeLimit*100);$("timerFill").style.width=pct+"%";$("timerFill").style.background=pct<30?"linear-gradient(90deg,#ff718d,#ffb16e)":"linear-gradient(90deg,#82f2c4,#ffd76a)";}
+function disableAnswers(){document.querySelectorAll(".answer").forEach(b=>b.disabled=true);}
+function finishTurn(message,kind){
+  stopTimer();state.locked=true;disableAnswers();$("feedback").textContent=message;$("nextBtn").hidden=false;
+  if(kind==="correct")$("nextBtn").textContent="เยี่ยมมาก! ข้อต่อไป ➜";else $("nextBtn").textContent="ไปต่อ ➜";
+}
+function answer(value,button){
+  if(state.locked)return;const p=state.current;state.stats[p].total++;
+  if(value===state.question.answer){state.scores[p]+=10;state.stats[p].correct++;button.classList.add("correct");soundCorrect();finishTurn("✨ ถูกต้อง! ได้รับ 10 คะแนน", "correct");}
+  else{state.stats[p].wrong++;button.classList.add("wrong");document.querySelectorAll(".answer").forEach(b=>{if(Number(b.textContent)===state.question.answer)b.classList.add("correct");});soundWrong();finishTurn("ยังไม่ถูกนะ คำตอบคือ "+state.question.answer+" ลองใหม่ในข้อต่อไป!", "wrong");}
+  updateScores();
+  if(state.scores[p]>=100){state.scores[p]=100;updateScores();setTimeout(()=>endGame(p),450);}
+}
+function timeoutTurn(){
+  if(state.locked)return;const p=state.current;state.stats[p].total++;state.stats[p].timeout++;soundWrong();finishTurn("⏰ หมดเวลา! คำตอบคือ "+state.question.answer,"timeout");
+}
+function useHint(){
+  if(state.locked||state.hintUsed)return;state.hintUsed=true;const p=state.current;state.scores[p]=Math.max(0,state.scores[p]-5);state.stats[p].hints++;$("hintBtn").disabled=true;
+  const q=state.question;let clue;
+  if(q.op==="+")clue=`ลองเริ่มจาก ${q.a} แล้วนับเพิ่มอีก ${q.b} จำนวน`;
+  else if(q.op==="−")clue=`เริ่มจาก ${q.a} แล้วนับถอยหลัง ${q.b} จำนวน`;
+  else clue=`การคูณคือการบวกซ้ำ: ${q.a} กลุ่ม กลุ่มละ ${q.b}`;
+  $("hintText").textContent="💡 คำใบ้: "+clue+" (ใช้คำใบ้แล้วหัก 5 คะแนน)";updateScores();tone(520,.12);
+}
+function nextTurn(){
+  if(!state.locked)return;
+  if(state.scores[state.current]>=100){endGame(state.current);return;}
+  state.current=1-state.current;newTurn();
+}
+// ============================================================
+// 4) สรุปผลและประเมินการเรียนรู้รายบุคคล
+// ============================================================
+function endGame(winner){
+  stopTimer();if(state.sessionSaved)return;state.sessionSaved=true;
+  const winnerStats=state.stats[winner],attempts=winnerStats.total,accuracy=attempts?Math.round(winnerStats.correct/attempts*100):0;
+  const stars=accuracy>=85?3:accuracy>=60?2:1;
+  const data=readData();data.games++;data.totalCorrect+=state.stats[0].correct+state.stats[1].correct;data.totalAttempts+=state.stats[0].total+state.stats[1].total;data.bestScore=Math.max(data.bestScore,state.scores[winner]);
+  const badge=stars===3?"ดาวนักคิดยอดเยี่ยม":stars===2?"นักคำนวณฝึกหัด":"ผู้กล้าแห่งอาณาจักร";if(!data.badges.includes(badge))data.badges.push(badge);saveData(data);
+  $("winnerTitle").textContent="🏆 "+state.players[winner]+" ชนะ!";
+  $("starsResult").textContent="★".repeat(stars)+"☆".repeat(3-stars);
+  $("resultSubtitle").textContent="ทำคะแนนได้ "+state.scores[winner]+" คะแนน จากเป้าหมาย 100 คะแนน";
+  $("rCorrect").textContent=winnerStats.correct;$("rAccuracy").textContent=accuracy+"%";$("rScore").textContent=state.scores[winner];
+  let advice=accuracy>=85?"ยอดเยี่ยม! มีความแม่นยำสูง ลองฝึกโจทย์ที่ยากขึ้นและอธิบายวิธีคิดของตนเอง":accuracy>=60?"ทำได้ดี! ควรฝึกโจทย์ที่ตอบผิดซ้ำอีกครั้ง และตรวจคำตอบก่อนกดเลือก":"ควรฝึกบวก ลบ หรือคูณทีละขั้น ใช้การนับนิ้วหรือวาดภาพช่วยคิด แล้วค่อยเพิ่มความเร็ว";
+  $("learningAdvice").innerHTML=`<b>ผลการเรียนรู้ของ ${escapeHTML(state.players[winner])}</b><br>• ตอบถูก ${winnerStats.correct} ข้อ · ตอบผิด ${winnerStats.wrong} ข้อ · หมดเวลา ${winnerStats.timeout} ข้อ<br>• ใช้คำใบ้ ${winnerStats.hints} ครั้ง<br>• ข้อเสนอแนะ: ${advice}<br><br><b>คะแนนผู้เล่นทั้งสองคน</b><br>${escapeHTML(state.players[0])}: ${state.scores[0]} คะแนน · ${escapeHTML(state.players[1])}: ${state.scores[1]} คะแนน`;
+  showScreen("result");
+}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function openDashboard(){
+  const d=readData(),acc=d.totalAttempts?Math.round(d.totalCorrect/d.totalAttempts*100):0;
+  $("dGames").textContent=d.games;$("dAccuracy").textContent=acc+"%";$("dBest").textContent=d.bestScore;
+  $("dAdvice").textContent=d.games===0?"ยังไม่มีข้อมูล ลองเล่นเกมอย่างน้อย 1 รอบเพื่อรับคำแนะนำ":acc>=85?"ทำได้ยอดเยี่ยม! รักษาความแม่นยำและลองฝึกโจทย์ที่ซับซ้อนขึ้น":acc>=60?"มีพื้นฐานที่ดี ควรทบทวนข้อที่ตอบผิดและฝึกคิดอย่างเป็นขั้นตอน":"ควรฝึกพื้นฐานการบวก ลบ และคูณอย่างสม่ำเสมอ โดยเน้นความเข้าใจก่อนความเร็ว";
+  $("dBadges").textContent=d.badges.length?d.badges.map(x=>"🏅 "+x).join(" · "):"ยังไม่มีเหรียญรางวัล";showScreen("dashboard");
+}
+// ============================================================
+// 5) ปุ่มควบคุมทั้งหมด
+// ============================================================
+$("startBtn").addEventListener("click",startGame);
+$("dashboardBtn").addEventListener("click",openDashboard);
+$("dashPlayBtn").addEventListener("click",()=>{showScreen("home");});
+$("dashHomeBtn").addEventListener("click",()=>showScreen("home"));
+$("resultDashBtn").addEventListener("click",openDashboard);
+$("homeBtn").addEventListener("click",()=>showScreen("home"));
+$("againBtn").addEventListener("click",startGame);
+$("hintBtn").addEventListener("click",useHint);
+$("nextBtn").addEventListener("click",nextTurn);
+$("quitBtn").addEventListener("click",()=>{stopTimer();showScreen("home");});
+$("soundToggle").addEventListener("click",()=>{state.sound=!state.sound;$("soundToggle").textContent=state.sound?"🔊 เสียง: เปิด":"🔇 เสียง: ปิด";if(state.sound)tone(600,.1);});
+$("clearDataBtn").addEventListener("click",()=>{if(confirm("ต้องการล้างสถิติการเรียนรู้ทั้งหมดในอุปกรณ์นี้หรือไม่?")){localStorage.removeItem(STORAGE_KEY);openDashboard();}});
+</script>
+</body>
+</html>
